@@ -47,7 +47,14 @@ anf_prazo_meses int,
 anf_valor_minimo decimal(10,2),
 anf_data_inicio date,
 anf_data_fim date,
-anf_link_simulador varchar(100)
+anf_link_simulador varchar(100),
+FOREIGN KEY (anf_empresa_id) references empresaFinanciamento(epf_id)
+);
+
+CREATE TABLE EmpresaFinanciamento(
+epf_id int auto_increment primary key,
+epf_cnpj varchar(14),
+epf_condicoes_especiais varchar(50)
 );
 
 CREATE TABLE Imovel(
@@ -70,6 +77,30 @@ imo_valor_avaliacao decimal(10,2),
 imo_documentacaoOK boolean
 );
 
+CREATE TABLE Lance(
+lan_id int auto_increment primary key,
+lan_valor decimal(10,2),
+lan_data_hora datetime,
+lan_cli int,
+lan_leilao int,
+FOREIGN KEY (lan_cli) references cliente(cli_id),
+FOREIGN KEY (lan_leilao) references leilaoimovel(lil_id)
+);
+
+CREATE TABLE LeilaoImovel(
+lil_id int auto_increment primary key,
+lil_imovel int,
+lil_leiloeiro varchar(14),
+lil_data_incio date,
+lil_data_fim date,
+lil_valor_inicial decimal(10,2),
+lil_valor_atual decimal(10,2),
+lil_incremento_minimo decimal(10,2),
+lil_status varchar(30),
+lil_lances int,
+FOREIGN KEY (lil_leiloeiro) references leiloeiro(lei_cnpj)
+);
+
 CREATE TABLE MaterialApoio(
 mta_id int primary key auto_increment,
 mta_titulo varchar(60),
@@ -77,7 +108,12 @@ mta_descricao text,
 mta_autor int,
 mta_data_publicacao date,
 mta_tipo varchar(30),
-mta_url varchar(200)
+mta_url varchar(200),
+FOREIGN KEY (mta_autor) references especialista(esp_id)
 );
 
 /*DROPS PARA ALTERAÇÃO*/
+DROP TABLE MaterialApoio;
+DROP TABLE anunciofinanciamento;
+DROP TABLE LeilaoImovel;
+DROP DATABASE leilao;
