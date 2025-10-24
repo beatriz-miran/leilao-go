@@ -11,7 +11,7 @@ CREATE TABLE Comprador (
     cmp_telefone_2 VARCHAR(15),
     cmp_email VARCHAR(60) UNIQUE,
     cmp_rua VARCHAR(100),
-    cmp_numero VARCHAR(10),
+    cmp_numero INTEGER,
     cmp_cep VARCHAR(10),
     cmp_complemento VARCHAR(30),
     cmp_estado VARCHAR(2),
