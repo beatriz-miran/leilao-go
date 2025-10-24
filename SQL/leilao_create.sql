@@ -20,26 +20,6 @@ CREATE TABLE Comprador (
     cmp_data_cadastro DATE
 );
 
--- ESPECIALISTA
-CREATE TABLE Especialista (
-    esp_id INTEGER PRIMARY KEY,
-    esp_nome VARCHAR(60),
-    esp_cpf VARCHAR(14) UNIQUE,
-    esp_data_nascimento DATE,
-    esp_telefone_1 VARCHAR(15),
-    esp_telefone_2 VARCHAR(15),
-    esp_email VARCHAR(30) UNIQUE,
-    esp_creci VARCHAR(10) UNIQUE,
-    esp_rua VARCHAR(100),
-    esp_numero INTEGER,
-    esp_cep VARCHAR(10),
-    esp_complemento VARCHAR(30),
-    esp_estado VARCHAR(2),
-    esp_cidade VARCHAR(50),
-    esp_senha VARCHAR(100),
-    esp_data_cadastro DATE
-);
-
 -- LEILOEIRO
 CREATE TABLE Leiloeiro (
     lil_id INTEGER PRIMARY KEY,
@@ -161,5 +141,3 @@ CREATE TABLE pagamento (
     FOREIGN KEY (prz_id) REFERENCES prazo_pagamento(prz_id),
     FOREIGN KEY (fmp_id) REFERENCES forma_pagamento(fmp_id)
 );
-
-drop database leilao;
