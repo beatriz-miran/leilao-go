@@ -40,12 +40,6 @@ CREATE TABLE Especialista (
     esp_data_cadastro DATE
 );
 
--- TIPO DE LEILOEIRO
-CREATE TABLE tipo_leiloeiro (
-    til_id INTEGER PRIMARY KEY,
-    til_nome VARCHAR(30)
-);
-
 -- LEILOEIRO
 CREATE TABLE Leiloeiro (
     lil_id INTEGER PRIMARY KEY,
@@ -62,14 +56,7 @@ CREATE TABLE Leiloeiro (
     lil_complemento VARCHAR(30),
     lil_rua VARCHAR(100),
     lil_numero INTEGER,
-    til_id INTEGER,
-    FOREIGN KEY (til_id) REFERENCES tipo_leiloeiro(til_id)
-);
-
--- STATUS DO IMÓVEL
-CREATE TABLE status_imovel (
-    sti_id INTEGER PRIMARY KEY,
-    sti_nome VARCHAR(20)
+    lil_tipo tinyint default 1 /*ou empresa ou instituição financeira*/
 );
 
 -- TIPO DE IMÓVEL
@@ -97,10 +84,9 @@ CREATE TABLE Imovel (
     imv_img1 VARCHAR(100),
     imv_img2 VARCHAR(100),
     imv_data_cadastro DATE,
-    sti_id INTEGER,
+    imv_status tinyint default 1, /*ou ocupado ou desocupado*/
     lil_id INTEGER,
     FOREIGN KEY (tpi_id) REFERENCES tipo_imovel(tpi_id),
-    FOREIGN KEY (sti_id) REFERENCES status_imovel(sti_id),
     FOREIGN KEY (lil_id) REFERENCES Leiloeiro(lil_id)
 );
 
@@ -143,14 +129,6 @@ CREATE TABLE Lance (
     FOREIGN KEY (cmp_id) REFERENCES Comprador(cmp_id)
 );
 
--- NOTIFICAÇÃO
-CREATE TABLE Notificacao (
-    ntf_id INTEGER PRIMARY KEY,
-    ntf_titulo VARCHAR(100),
-    ntf_mensagem VARCHAR(255),
-    ntf_data_hora_envio DATETIME
-);
-
 -- PRAZO DE PAGAMENTO
 CREATE TABLE prazo_pagamento (
     prz_id INTEGER PRIMARY KEY,
@@ -173,29 +151,6 @@ CREATE TABLE Favorita (
     FOREIGN KEY (lei_id) REFERENCES Leilao(lei_id)
 );
 
-CREATE TABLE visualiza (
-    cmp_id INTEGER,
-    lei_id INTEGER,
-    PRIMARY KEY (cmp_id, lei_id),
-    FOREIGN KEY (cmp_id) REFERENCES Comprador(cmp_id),
-    FOREIGN KEY (lei_id) REFERENCES Leilao(lei_id)
-);
-
-CREATE TABLE recebe (
-    cmp_id INTEGER,
-    ntf_id INTEGER,
-    PRIMARY KEY (cmp_id, ntf_id),
-    FOREIGN KEY (cmp_id) REFERENCES Comprador(cmp_id),
-    FOREIGN KEY (ntf_id) REFERENCES Notificacao(ntf_id)
-);
-
-CREATE TABLE contatar (
-    esp_id INTEGER,
-    cmp_id INTEGER,
-    PRIMARY KEY (esp_id, cmp_id),
-    FOREIGN KEY (esp_id) REFERENCES Especialista(esp_id),
-    FOREIGN KEY (cmp_id) REFERENCES Comprador(cmp_id)
-);
 
 CREATE TABLE pagamento (
     imv_id INTEGER,
